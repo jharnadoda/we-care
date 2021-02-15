@@ -15,6 +15,8 @@ import 'package:we_care/Widgets/search_bar.dart';
 import 'package:we_care/PillReminder.dart';
 import 'Widgets/CustomBox.dart';
 import 'models/users.dart';
+import 'bloodPressureTrackerScreen.dart';
+
 class HomePage extends StatefulWidget {
   // This widget is the root of your application.
   @override
@@ -45,24 +47,24 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   String name, mail;
-  getCurrentUser() async
-  {
-    GoogleSignInAccount user= googleSignIn.currentUser;
-    mail=user.email;
-    final QuerySnapshot snapshot= await usersRef.where("email", isEqualTo: mail).getDocuments();
+  getCurrentUser() async {
+    GoogleSignInAccount user = googleSignIn.currentUser;
+    mail = user.email;
+    final QuerySnapshot snapshot =
+        await usersRef.where("email", isEqualTo: mail).getDocuments();
     snapshot.documents.forEach((DocumentSnapshot doc) {
       setState(() {
-        name=User.fromDocument(doc).displayName;
+        name = User.fromDocument(doc).displayName;
       });
     });
   }
 
   Widget build(BuildContext context) {
     getCurrentUser();
-        var size = MediaQuery.of(context)
+    var size = MediaQuery.of(context)
         .size; //this gonna give us total height and with of our device
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(email:mail),
+      bottomNavigationBar: BottomNavBar(email: mail),
       body: Stack(
         children: <Widget>[
           Container(
@@ -114,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: Icon(Icons.volume_up),
                         //tooltip: 'Increase volume by 10',
                         onPressed: () {
-                          final player= AudioCache();
+                          final player = AudioCache();
                           player.play("menu.mp3");
                         },
                       ),
@@ -137,20 +139,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           img: "images/medsIcon.png",
                           press: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context){
-                                  return pill(email: mail);
-                                }
-                                ));
+                                MaterialPageRoute(builder: (context) {
+                              return pill(email: mail);
+                            }));
                           },
                         ),
                         CustomBox(
-                          title: "My Health",
-                          img: "images/myHealth.jpg",
+                          title: "Pharmacies Near Me",
+                          img: "images/pharmacy.jpg",
                           press: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return HealthVitals();
+                                return BloodPressureTrackerScreen();
                               }),
                             );
                           },
@@ -158,28 +159,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         CustomBox(
                           title: "Hospitals Near Me",
                           img: "images/hospital.JPG",
-                          press: () {
-
-                          },
+                          press: () {},
                         ),
                         RaisedButton(
                           child: Text("Logout"),
-                          onPressed: (){
+                          onPressed: () {
                             googleSignIn.signOut();
                             print("signed out");
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context){
-                                  return phone();
-                                }
-
-                                ));
+                                MaterialPageRoute(builder: (context) {
+                              return phone();
+                            }));
                           },
                         ),
                       ],
                     ),
-
                   ),
-
                 ],
               ),
             ),

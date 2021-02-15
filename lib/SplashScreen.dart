@@ -42,15 +42,15 @@ class SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      // child: Center(
-      //   child: Text(
-      //     'We Care',
-      //     style: TextStyle(
-      //       fontFamily: 'Cookie',
-      //       fontSize: 50.0,
-      //     ),
-      //   ),
-      // ),
+        // child: Center(
+        //   child: Text(
+        //     'We Care',
+        //     style: TextStyle(
+        //       fontFamily: 'Cookie',
+        //       fontSize: 50.0,
+        //     ),
+        //   ),
+        // ),
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage('images/SSbg.png'), fit: BoxFit.cover)));
