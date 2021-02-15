@@ -60,8 +60,6 @@ class _signup_vState extends State<signup_v> {
               ),
             ),
           ),
-
-
         ],
       ),
       SizedBox(height: 100),

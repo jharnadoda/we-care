@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:we_care/AddNewPill.dart';
 import 'displayPills.dart';
 class pill extends StatelessWidget{
-  final String email;
-  pill({@required this.email});
+  final String userID;
+  pill({@required this.userID});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,7 +14,7 @@ class pill extends StatelessWidget{
           centerTitle: true,
           title: Text('WeCare',
             style: TextStyle(
-                color: Colors.black,
+              color: Colors.black,
             ),
           ),
           backgroundColor: Color(0xFFFEC0B2),
@@ -36,7 +36,7 @@ class pill extends StatelessWidget{
                 ),
               ),
               SizedBox(
-                height: 5,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +52,7 @@ class pill extends StatelessWidget{
                 ],
               ),
               SizedBox(
-                height: 10
+                  height: 10
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +163,7 @@ class pill extends StatelessWidget{
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return AddNewPill(email: this.email);
+                          return AddNewPill(userID: this.userID);
                         }),
                       );
                     },
@@ -184,7 +184,7 @@ class pill extends StatelessWidget{
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) {
-                          return displayPills(email: this.email);
+                          return displayPills(userID :this.userID);
                         }),
                       );
 

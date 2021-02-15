@@ -8,8 +8,8 @@ import 'package:we_care/screens/details_screen.dart';
 import 'models/users.dart';
 final pillref= Firestore.instance.collection('pills');
 class AddNewPill extends StatefulWidget {
-  final String email;
-  AddNewPill({@required this.email});
+  final String userID;
+  AddNewPill({@required this.userID});
     @override
   _AddNewPillState createState() => _AddNewPillState();
 }
@@ -202,8 +202,8 @@ class _AddNewPillState extends State<AddNewPill> {
                       print(medicineType);
                       print(_quantiyController.text.trim());
                       print(_unitController.text.trim());
-                      print(widget.email);
-                      pillref.add({"Email": widget.email,
+                      print(widget.userID);
+                      pillref.add({"id": widget.userID,
                         "PillName": _nameController.text.trim(),
                       "Time": _timeController.text.trim(),
                       "MedicineType": medicineType,

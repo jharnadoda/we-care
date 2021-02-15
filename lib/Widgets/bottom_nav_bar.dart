@@ -8,8 +8,8 @@ class BottomNavBar extends StatelessWidget {
   //const BottomNavBar({
     //Key key,
   //}) : super(key: key);
-  final String email;
-  BottomNavBar({@required this.email});
+  final String userID;
+  BottomNavBar({@required this.userID});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +36,7 @@ class BottomNavBar extends StatelessWidget {
             onTap: (){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return myProfile(email: this.email);
+                      return myProfile(userID: this.userID);
                     }
                     ));
             },

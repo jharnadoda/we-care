@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 final pillref= Firestore.instance.collection('pills');
 class displayPills extends StatefulWidget{
-  final String email;
-  displayPills({@required this.email});
+  final String userID;
+  displayPills({@required this.userID});
   @override
   _displayPillsState createState() => _displayPillsState();
 }
@@ -41,7 +41,7 @@ class _displayPillsState extends State<displayPills> {
                   ),
                 ),
                 FutureBuilder<QuerySnapshot>(
-                  future: pillref.where("Email", isEqualTo: widget.email).getDocuments(),
+                  future: pillref.where("id", isEqualTo: widget.userID).getDocuments(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                     if(!snapshot.hasData)
                     {

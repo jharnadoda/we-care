@@ -1,8 +1,10 @@
+//import 'dart:html';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:we_care/addEmergencyContact.dart';
 import 'package:we_care/models/users.dart';
 import 'otp.dart';
 import 'signup_volunteer.dart';
@@ -55,18 +57,38 @@ class _phone_vState extends State<phone_v> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    googleSignIn.onCurrentUserChanged.listen((account)
+    googleSignIn.onCurrentUserChanged.listen((account) async
     {
       if(account!=null)
         {
-          createUserInFirestore();
-          print('User Signed in: $account');
-          setState(() {
-            isAuth=true;
-          });
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return HomePage();
-          }));
+          final GoogleSignInAccount user= googleSignIn.currentUser;
+          DocumentSnapshot doc= await usersRef.document(user.id).get();
+          if(!doc.exists) {
+            print('Create an Account');
+            usersRef.document(user.id).setData({
+              "id": user.id,
+              "email": user.email,
+              "displayName": user.displayName,
+              "number": "",
+              "emergencyContact": "",
+              "timestamp": timestamp
+            });
+            doc= await usersRef.document(user.id).get();
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return addEmergencyContact(userID: user.id);
+            }));
+          }
+          else {
+            currentUser = User.fromDocument(doc);
+            print(currentUser.email);
+            print('User Signed in: $account');
+            setState(() {
+              isAuth = true;
+            });
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return HomePage(userID: currentUser.id,);
+            }));
+          }
         }
       else{
         setState(() {
@@ -77,17 +99,36 @@ class _phone_vState extends State<phone_v> {
     onError: (err){
       print('Error Signing In: $err');
     });
-    googleSignIn.signInSilently(suppressErrors: false).then((account){
-      if(account!=null)
-      {
-        createUserInFirestore();
-        print('User Signed in: $account');
-        setState(() {
-          isAuth=true;
-        });
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return HomePage();
-        }));
+    googleSignIn.signInSilently(suppressErrors: false).then((account) async{
+      if(account!=null) {
+        final GoogleSignInAccount user = googleSignIn.currentUser;
+        DocumentSnapshot doc = await usersRef.document(user.id).get();
+        if (!doc.exists) {
+          print('Create an Account');
+          usersRef.document(user.id).setData({
+            "id": user.id,
+            "email": user.email,
+            "displayName": user.displayName,
+            "number": "",
+            "emergencyContact": "",
+            "timestamp": timestamp
+          });
+          doc = await usersRef.document(user.id).get();
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return addEmergencyContact(userID: user.id);
+          }));
+        }
+        else {
+          currentUser = User.fromDocument(doc);
+          print(currentUser.email);
+          print('User Signed in: $account');
+          setState(() {
+            isAuth = true;
+          });
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return HomePage(userID: currentUser.id,);
+          }));
+        }
       }
       else{
       setState(() {
@@ -98,23 +139,23 @@ class _phone_vState extends State<phone_v> {
       print('Error Signing In: $err');
     });
   }
-  createUserInFirestore() async{
+  /* createUserInFirestore() async{
     final GoogleSignInAccount user= googleSignIn.currentUser;
     DocumentSnapshot doc= await usersRef.document(user.id).get();
-
     if(!doc.exists) {
       print('Create an Account');
       usersRef.document(user.id).setData({
         "id": user.id,
         "email": user.email,
         "displayName": user.displayName,
+        "number": "",
         "timestamp": timestamp
       });
       doc= await usersRef.document(user.id).get();
     }
     currentUser = User.fromDocument(doc);
     print(currentUser.email);
-  }
+  }*/
   @override
   final _phoneController=TextEditingController();
   final _codeController= TextEditingController();
@@ -127,12 +168,37 @@ class _phone_vState extends State<phone_v> {
           AuthResult result = await _auth.signInWithCredential(credential);
           FirebaseUser user = result.user;
           if (user != null) {
-            {
+    {
+    DateTime creationtime= user.metadata.creationTime;
+    DateTime lastsignintime=user.metadata.lastSignInTime;
+    String id;
+    String number = _phoneController.text;
+    if(creationtime==lastsignintime) {
+    DocumentReference ref = Firestore.instance.collection(
+    'users').document();
+    id = ref.documentID;
+    ref.setData({
+    "id": ref.documentID,
+    "email": "",
+    "displayName": "",
+    "number": "$number",
+     "emergencyContact": "",
+    "timestamp": timestamp
+    });
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return addEmergencyContact(userID: ref.documentID);
+    }));
+    }
+    else{
+    final QuerySnapshot snapshot= await usersRef.where("number",isEqualTo: number).getDocuments();
+    snapshot.documents.forEach((DocumentSnapshot doc) {
+      id=doc['id'];
+    });
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return HomePage();
+                return HomePage(userID: id);
               }));
             }
-          }
+          }}
           else{
             print('Error');
           }
@@ -166,9 +232,36 @@ class _phone_vState extends State<phone_v> {
                 FirebaseUser user = result.user;
                 if (user != null) {
                   {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return HomePage();
-                    }));
+                    DateTime creationtime= user.metadata.creationTime;
+                    DateTime lastsignintime=user.metadata.lastSignInTime;
+                    String id;
+                    String number = _phoneController.text;
+                    if(creationtime==lastsignintime) {
+                      DocumentReference ref = Firestore.instance.collection(
+                          'users').document();
+                      id = ref.documentID;
+                      ref.setData({
+                        "id": ref.documentID,
+                        "email": "",
+                        "displayName": "",
+                        "number": "$number",
+                        "emergencyContact": "",
+                        "timestamp": timestamp
+                      });
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return addEmergencyContact(userID: ref.documentID);
+                      }));
+                    }
+                    else{
+                      final QuerySnapshot snapshot= await usersRef.where("number",isEqualTo: number).getDocuments();
+                      snapshot.documents.forEach((DocumentSnapshot doc) {
+                        id=doc['id'];
+                      });
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return HomePage(userID: id);
+                      }));
+                    }
+
                   }
                 }
                 else{
@@ -183,6 +276,7 @@ class _phone_vState extends State<phone_v> {
         },
         codeAutoRetrievalTimeout: null);
 }
+
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
