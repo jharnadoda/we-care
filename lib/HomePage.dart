@@ -15,7 +15,7 @@ import 'package:we_care/Widgets/search_bar.dart';
 import 'package:we_care/PillReminder.dart';
 import 'Widgets/CustomBox.dart';
 import 'models/users.dart';
-import 'bloodPressureTrackerScreen.dart';
+import 'trackerHome.dart';
 
 class HomePage extends StatefulWidget {
   // This widget is the root of your application.
@@ -145,13 +145,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ),
                         CustomBox(
-                          title: "Pharmacies Near Me",
+                          title: "My Vitals",
                           img: "images/pharmacy.jpg",
                           press: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return BloodPressureTrackerScreen();
+                                return TrackerHome();
                               }),
                             );
                           },
