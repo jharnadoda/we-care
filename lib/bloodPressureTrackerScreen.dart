@@ -86,7 +86,7 @@ class _BloodPressureTrackerScreenState
                             'Diastolic ',
                             style: TextStyle(
                               fontSize: 32,
-                              color: Color(0xff3d5afe),
+                              color: Color(0xFFffc0b4),
                             ),
                           ),
                         ),
@@ -140,7 +140,7 @@ class _BloodPressureTrackerScreenState
                             'Systolic',
                             style: TextStyle(
                               fontSize: 32,
-                              color: Color(0xff3d5afe),
+                              color: Color(0xFFffc0b4),
                             ),
                           ),
                         ),
@@ -194,7 +194,7 @@ class _BloodPressureTrackerScreenState
                             'Pulse',
                             style: TextStyle(
                               fontSize: 32,
-                              color: Color(0xff3d5afe),
+                              color: Color(0xFFffc0b4),
                             ),
                           ),
                         ),

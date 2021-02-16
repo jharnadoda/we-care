@@ -40,7 +40,7 @@ class _AddBloodPressureScreenState extends State<AddBloodPressureScreen> {
                   'Add Blood Pressure Data',
                   style: TextStyle(
                     fontSize: 28,
-                    color: Color(0xff3d5afe),
+                    color: Color(0xFFffc0b4),
                   ),
                 ),
               ),
@@ -166,7 +166,7 @@ class _AddBloodPressureScreenState extends State<AddBloodPressureScreen> {
               height: 15,
             ),
             RaisedButton.icon(
-                color: Color(0xff3d5afe),
+                color: Color(0xFFffc0b4),
                 onPressed: () async {
                   _trackerKey.currentState.validate();
                   await saveData();

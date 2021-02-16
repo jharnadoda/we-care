@@ -67,7 +67,7 @@ class _BloodPressureChartState extends State<BloodPressureChart> {
       return [
         charts.Series<BloodPressure, DateTime>(
           id: 'Blood Pressure Pulse Tracking',
-          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+          colorFn: (_, __) => charts.MaterialPalette.pink.shadeDefault,
           domainFn: (BloodPressure b, _) =>
               DateTime(b.dateTime.year, b.dateTime.month, b.dateTime.day),
           measureFn: (BloodPressure b, _) => b.pulse,
@@ -78,7 +78,7 @@ class _BloodPressureChartState extends State<BloodPressureChart> {
       return [
         charts.Series<BloodPressure, DateTime>(
           id: 'Blood Pressure Systolic  Tracking',
-          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+          colorFn: (_, __) => charts.MaterialPalette.pink.shadeDefault,
           domainFn: (BloodPressure b, _) =>
               DateTime(b.dateTime.year, b.dateTime.month, b.dateTime.day),
           measureFn: (BloodPressure b, _) => b.systolic,

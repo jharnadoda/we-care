@@ -45,10 +45,10 @@ class _TrackerHomeState extends State<TrackerHome> {
             child: Container(
               margin: EdgeInsets.fromLTRB(20, 30, 20, 0),
               child: Text(
-                'Health Trackers',
+                'Health Vitals Trackers',
                 style: TextStyle(
                   fontSize: 32,
-                  color: Color(0xff3d5afe),
+                  color: Color(0xFFffc0b4),
                 ),
               ),
             ),
@@ -58,8 +58,7 @@ class _TrackerHomeState extends State<TrackerHome> {
           ),
           TrackerCard(
             title: 'Weight Tracker',
-            subTitle:
-                '\nHow much did you weigh ? Track to see progress over time.\n',
+            subTitle: '\nAdd your Weight!\n',
             onAdd: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return AddWeightScreen();
@@ -76,8 +75,7 @@ class _TrackerHomeState extends State<TrackerHome> {
           ),
           TrackerCard(
             title: 'Blood Pressure',
-            subTitle:
-                '\nWhat\'s your blood pressure reading ?Track to see progress over time.\n',
+            subTitle: '\nAdd your BP reading today!\n',
             onAdd: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return AddBloodPressureScreen();
