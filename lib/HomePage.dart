@@ -14,10 +14,15 @@ import 'package:we_care/screens/details_screen.dart';
 import 'package:we_care/Widgets/bottom_nav_bar.dart';
 import 'package:we_care/Widgets/search_bar.dart';
 import 'package:we_care/PillReminder.dart';
+import 'NearbyHospitalScreen.dart';
+import 'NearbyPharmacyScreen.dart';
+import 'NearbyPoliceScreen.dart';
 import 'Widgets/CustomBox.dart';
 import 'models/users.dart';
 import 'trackerHome.dart';
-final usersRef= Firestore.instance.collection('users');
+
+final usersRef = Firestore.instance.collection('users');
+
 class HomePage extends StatefulWidget {
   HomePage({@required this.userID});
   String userID;
@@ -51,12 +56,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context)
         .size; //this gonna give us total height and with of our device
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(userID:widget.userID),
+      bottomNavigationBar: BottomNavBar(userID: widget.userID),
       body: Stack(
         children: <Widget>[
           Container(
@@ -95,9 +99,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   FutureBuilder<DocumentSnapshot>(
                       future: usersRef.document(widget.userID).get(),
-                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
-                        Map<String, dynamic> data=snapshot.data.data;
-                        String name=data['displayName'];
+                      builder: (BuildContext context,
+                          AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        Map<String, dynamic> data = snapshot.data.data;
+                        String name = data['displayName'];
                         return Text(
                           "Good Morning $name",
                           style: Theme.of(context)
@@ -105,8 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               .display1
                               .copyWith(fontWeight: FontWeight.w900),
                         );
-                      }
-                  ),
+                      }),
                   SearchBar(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -156,9 +160,40 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ),
                         CustomBox(
+                          title: "Pharmacies Near Me",
+                          img: "images/pharmacy.jpg",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return NearbyPharmacyScreen();
+                              }),
+                            );
+                          },
+                        ),
+                        CustomBox(
                           title: "Hospitals Near Me",
-                          img: "images/hospital.JPG",
-                          press: () {},
+                          img: "images/hospital.jpg",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return NearbyHospitalScreen();
+                              }),
+                            );
+                          },
+                        ),
+                        CustomBox(
+                          title: "Police Stations Near Me",
+                          img: "images/ps.jpg",
+                          press: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return NearbyPoliceScreen();
+                              }),
+                            );
+                          },
                         ),
                         CustomBox(
                           title: "My Chats",
@@ -166,8 +201,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           press: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                                  return chatScreen(userID: widget.userID);
-                                }));
+                              return chatScreen(userID: widget.userID);
+                            }));
                           },
                         ),
                       ],
