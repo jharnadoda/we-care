@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>104312931859-qmffie9tnub8490oc27fe1m56925rt35.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.104312931859-qmffie9tnub8490oc27fe1m56925rt35</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>104312931859-3id7sfjrpd5tv7ves3me0r0ksqk7hp2f.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD_3sri4YMZ2Sum78-mBxxuJwYyS_D3BZo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>104312931859</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.weCare</string>
+	<key>PROJECT_ID</key>
+	<string>wecare-031559</string>
+	<key>STORAGE_BUCKET</key>
+	<string>wecare-031559.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:104312931859:ios:99207aba5fb2ab246161e6</string>
+	<key>DATABASE_URL</key>
+	<string>https://wecare-031559.firebaseio.com</string>
+</dict>
+</plist>
