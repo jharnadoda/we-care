@@ -1,3 +1,4 @@
+//import 'dart:html';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:we_care/HealthVitals.dart';
-import 'package:we_care/addEmergencyContact.dart';
 //import 'package:we_care/LoginPage.dart';
 import 'package:we_care/constants.dart';
 import 'package:we_care/phone.dart';
@@ -13,13 +13,11 @@ import 'package:we_care/screens/details_screen.dart';
 import 'package:we_care/Widgets/bottom_nav_bar.dart';
 import 'package:we_care/Widgets/search_bar.dart';
 import 'package:we_care/PillReminder.dart';
-import 'bloodPressureTrackerScreen.dart';
 import 'Widgets/CustomBox.dart';
 import 'models/users.dart';
-final usersRef= Firestore.instance.collection('users');
+import 'trackerHome.dart';
+
 class HomePage extends StatefulWidget {
-  HomePage({@required this.userID});
-  String userID;
   // This widget is the root of your application.
   @override
   _HomePageState createState() => _HomePageState();
@@ -36,26 +34,37 @@ class _HomePageState extends State<HomePage> {
         scaffoldBackgroundColor: Colors.teal[450],
         textTheme: Theme.of(context).textTheme.apply(displayColor: kTextColor),
       ),
-      home: HomeScreen(userID: widget.userID),
+      home: HomeScreen(),
     );
   }
 }
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({@required this.userID});
-  String userID;
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  String name, mail;
+  getCurrentUser() async {
+    GoogleSignInAccount user = googleSignIn.currentUser;
+    mail = user.email;
+    final QuerySnapshot snapshot =
+        await usersRef.where("email", isEqualTo: mail).getDocuments();
+    snapshot.documents.forEach((DocumentSnapshot doc) {
+      setState(() {
+        name = User.fromDocument(doc).displayName;
+      });
+    });
+  }
 
   Widget build(BuildContext context) {
+    getCurrentUser();
     var size = MediaQuery.of(context)
         .size; //this gonna give us total height and with of our device
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(userID:widget.userID),
+      bottomNavigationBar: BottomNavBar(email: mail),
       body: Stack(
         children: <Widget>[
           Container(
@@ -92,19 +101,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  FutureBuilder<DocumentSnapshot>(
-                      future: usersRef.document(widget.userID).get(),
-                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
-                        Map<String, dynamic> data=snapshot.data.data;
-                        String name=data['displayName'];
-                        return Text(
-                          "Good Morning $name",
-                          style: Theme.of(context)
-                              .textTheme
-                              .display1
-                              .copyWith(fontWeight: FontWeight.w900),
-                        );
-                      }
+                  Text(
+                    "Good Morning $name",
+                    style: Theme.of(context)
+                        .textTheme
+                        .display1
+                        .copyWith(fontWeight: FontWeight.w900),
                   ),
                   SearchBar(),
                   Row(
@@ -114,21 +116,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         icon: Icon(Icons.volume_up),
                         //tooltip: 'Increase volume by 10',
                         onPressed: () {
-                          final player= AudioCache();
+                          final player = AudioCache();
                           player.play("menu.mp3");
                         },
                       ),
                     ],
-                  ),
-                  RaisedButton(
-                    child: Text('emergency'),
-                    onPressed: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context){
-                            return addEmergencyContact();
-                          }
-                          ));
-                    },
                   ),
                   Expanded(
                     child: GridView.count(
@@ -147,20 +139,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           img: "images/medsIcon.png",
                           press: () {
                             Navigator.push(context,
-                                MaterialPageRoute(builder: (context){
-                                  return pill(userID: widget.userID);
-                                }
-                                ));
+                                MaterialPageRoute(builder: (context) {
+                              return pill(email: mail);
+                            }));
                           },
                         ),
                         CustomBox(
-                          title: "My Health",
-                          img: "images/myHealth.jpg",
+                          title: "My Vitals",
+                          img: "images/pharmacy.jpg",
                           press: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return BloodPressureTrackerScreen();
+                                return TrackerHome();
                               }),
                             );
                           },
@@ -168,15 +159,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         CustomBox(
                           title: "Hospitals Near Me",
                           img: "images/hospital.JPG",
-                          press: () {
-
+                          press: () {},
+                        ),
+                        RaisedButton(
+                          child: Text("Logout"),
+                          onPressed: () {
+                            googleSignIn.signOut();
+                            print("signed out");
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return phone();
+                            }));
                           },
                         ),
                       ],
                     ),
-
                   ),
-
                 ],
               ),
             ),
