@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:we_care/HealthVitals.dart';
+import 'package:we_care/chatScreen.dart';
 //import 'package:we_care/LoginPage.dart';
 import 'package:we_care/constants.dart';
 import 'package:we_care/phone.dart';
@@ -16,8 +17,10 @@ import 'package:we_care/PillReminder.dart';
 import 'Widgets/CustomBox.dart';
 import 'models/users.dart';
 import 'trackerHome.dart';
-
+final usersRef= Firestore.instance.collection('users');
 class HomePage extends StatefulWidget {
+  HomePage({@required this.userID});
+  String userID;
   // This widget is the root of your application.
   @override
   _HomePageState createState() => _HomePageState();
@@ -34,37 +37,26 @@ class _HomePageState extends State<HomePage> {
         scaffoldBackgroundColor: Colors.teal[450],
         textTheme: Theme.of(context).textTheme.apply(displayColor: kTextColor),
       ),
-      home: HomeScreen(),
+      home: HomeScreen(userID: widget.userID),
     );
   }
 }
 
 class HomeScreen extends StatefulWidget {
+  HomeScreen({@required this.userID});
+  String userID;
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  String name, mail;
-  getCurrentUser() async {
-    GoogleSignInAccount user = googleSignIn.currentUser;
-    mail = user.email;
-    final QuerySnapshot snapshot =
-        await usersRef.where("email", isEqualTo: mail).getDocuments();
-    snapshot.documents.forEach((DocumentSnapshot doc) {
-      setState(() {
-        name = User.fromDocument(doc).displayName;
-      });
-    });
-  }
 
   Widget build(BuildContext context) {
-    getCurrentUser();
     var size = MediaQuery.of(context)
         .size; //this gonna give us total height and with of our device
     return Scaffold(
-      bottomNavigationBar: BottomNavBar(email: mail),
+      bottomNavigationBar: BottomNavBar(userID:widget.userID),
       body: Stack(
         children: <Widget>[
           Container(
@@ -101,12 +93,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  Text(
-                    "Good Morning $name",
-                    style: Theme.of(context)
-                        .textTheme
-                        .display1
-                        .copyWith(fontWeight: FontWeight.w900),
+                  FutureBuilder<DocumentSnapshot>(
+                      future: usersRef.document(widget.userID).get(),
+                      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
+                        Map<String, dynamic> data=snapshot.data.data;
+                        String name=data['displayName'];
+                        return Text(
+                          "Good Morning $name",
+                          style: Theme.of(context)
+                              .textTheme
+                              .display1
+                              .copyWith(fontWeight: FontWeight.w900),
+                        );
+                      }
                   ),
                   SearchBar(),
                   Row(
@@ -140,13 +139,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           press: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return pill(email: mail);
+                              return pill(userID: widget.userID);
                             }));
                           },
                         ),
                         CustomBox(
                           title: "My Vitals",
-                          img: "images/pharmacy.jpg",
+                          img: "images/sugarIcon.jpg",
                           press: () {
                             Navigator.push(
                               context,
@@ -161,15 +160,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           img: "images/hospital.JPG",
                           press: () {},
                         ),
-                        RaisedButton(
-                          child: Text("Logout"),
-                          onPressed: () {
-                            googleSignIn.signOut();
-                            print("signed out");
+                        CustomBox(
+                          title: "My Chats",
+                          img: "images/phone.png",
+                          press: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return phone();
-                            }));
+                                  return chatScreen(userID: widget.userID);
+                                }));
                           },
                         ),
                       ],
