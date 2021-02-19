@@ -36,7 +36,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  TextEditingController _controllerPeople;
+  TextEditingController _controllerPeople, _controllerMessage;
   String _message, body;
   String _canSendSMSMessage = "Check is not run.";
   List<String> people = [];
