@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:we_care/HealthVitals.dart';
-import 'package:we_care/chatScreen.dart';
+//import 'package:we_care/chatScreen.dart';
 //import 'package:we_care/LoginPage.dart';
 import 'package:we_care/constants.dart';
 import 'package:we_care/phone.dart';
@@ -20,6 +20,7 @@ import 'NearbyPoliceScreen.dart';
 import 'Widgets/CustomBox.dart';
 import 'models/users.dart';
 import 'trackerHome.dart';
+import 'emergency.dart';
 
 final usersRef = Firestore.instance.collection('users');
 
@@ -90,11 +91,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Color(0xFFffc0b7),
                         shape: BoxShape.circle,
                       ),
-                      child: Image.asset(
-                        'images/emergency.png',
-                        width: 70,
-                        height: 70,
-                      ),
+                      child: RaisedButton(
+                        onPressed: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                            return MyApp();
+                       }
+                       ),
+                       );
+                        }
+                      )
                     ),
                   ),
                   FutureBuilder<DocumentSnapshot>(
@@ -201,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           press: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return chatScreen(userID: widget.userID);
+                              //return chatScreen(userID: widget.userID);
                             }));
                           },
                         ),
