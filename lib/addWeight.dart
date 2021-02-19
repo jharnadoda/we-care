@@ -38,7 +38,7 @@ class _AddWeightScreenState extends State<AddWeightScreen> {
                   'Add Weight Data',
                   style: TextStyle(
                     fontSize: 32,
-                    color: Color(0xff3d5afe),
+                    color: Color(0xFFffc0b4),
                   ),
                 ),
               ),
@@ -110,7 +110,7 @@ class _AddWeightScreenState extends State<AddWeightScreen> {
               height: 15,
             ),
             RaisedButton.icon(
-                color: Color(0xff3d5afe),
+                color: Color(0xFFffc0b4),
                 onPressed: () async {
                   _trackerKey.currentState.validate();
                   await saveData();

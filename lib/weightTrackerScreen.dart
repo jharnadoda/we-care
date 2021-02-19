@@ -63,7 +63,7 @@ class _WeightTrackerScreenState extends State<WeightTrackerScreen> {
                 'Weight Tracker',
                 style: TextStyle(
                   fontSize: 32,
-                  color: Color(0xff3d5afe),
+                  color: Color(0xFFffc0b4),
                 ),
               ),
             ),

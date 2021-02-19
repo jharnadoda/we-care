@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/we_care.iml" filepath="$PROJECT_DIR$/we_care.iml" />
       <module fileurl="file://$PROJECT_DIR$/android/we_care_android.iml" filepath="$PROJECT_DIR$/android/we_care_android.iml" />
     </modules>
   </component>
 </project>
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/we-care.iml" filepath="$PROJECT_DIR$/.idea/we-care.iml" />
+    </modules>
+  </component>
+</project>
+>>>>>>> origin/master

@@ -54,7 +54,7 @@ class _WeightChartState extends State<WeightChart> {
     return [
       charts.Series<Weight, DateTime>(
         id: 'Weight Tracking',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        colorFn: (_, __) => charts.MaterialPalette.pink.shadeDefault,
         domainFn: (Weight weight, _) => DateTime(
             weight.dateTime.year, weight.dateTime.month, weight.dateTime.day),
         measureFn: (Weight weight, _) => weight.weight,

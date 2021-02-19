@@ -1,4 +1,5 @@
 # Default ignored files
+<<<<<<< HEAD
 /workspace.xml
 
 # Project exclude paths
@@ -11,3 +12,6 @@
 /.
 # Project exclude paths
 /.
+=======
+/workspace.xml
+>>>>>>> origin/master
