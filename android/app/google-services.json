@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "104312931859-5lvnpvi8jrvk0v7sohhslgko2mtk0d8j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.we_care",
+            "certificate_hash": "2f321544ef622c8c1b3bb04e20e598ec834104aa"
+          }
+        },
+        {
           "client_id": "104312931859-92tseeg8f8c97vfg6l8enahj3sksju48.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -38,6 +46,13 @@
             {
               "client_id": "104312931859-92tseeg8f8c97vfg6l8enahj3sksju48.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "104312931859-qmffie9tnub8490oc27fe1m56925rt35.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.weCare"
+              }
             }
           ]
         }
