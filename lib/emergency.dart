@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'elder_location.dart';
 import 'dart:async';
+
 import 'package:flutter_sms/flutter_sms.dart';
+
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
+
+import 'elder_location.dart';
 
 // The existing imports
 // !! Keep your existing impots here !!
@@ -37,20 +40,23 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   TextEditingController _controllerPeople, _controllerMessage;
+  ElderLocation elderLocation;
+  String messageText = '';
   String _message, body;
   String _canSendSMSMessage = "Check is not run.";
   List<String> people = [];
-  ElderLocation elderLocation;
-  String messageText = '';
 
   @override
   void initState() {
     super.initState();
     initPlatformState();
+    elderLocation = ElderLocation();
+
+    getLocationDetails();
   }
 
   Future<void> initPlatformState() async {
-    //_controllerPeople = TextEditingController();
+    _controllerPeople = TextEditingController();
     _controllerMessage = TextEditingController();
   }
 
@@ -63,17 +69,17 @@ class _MyAppState extends State<MyApp> {
       setState(() => _message = error.toString());
     }
   }
+  getLocationDetails() async {//CALL THIS
+    await elderLocation.getLocationData();
+    messageText =
+    'Hey , This is xyz find me at ${elderLocation.address} .\n Link to my location : ${elderLocation.url}';
+    return elderLocation;
+  }
 
   void _canSendSMS() async {
     bool _result = await canSendSMS();
     setState(() => _canSendSMSMessage =
     _result ? 'This unit can send SMS' : 'This unit cannot send SMS');
-  }
-  getLocationDetails() async {
-    await elderLocation.getLocationData();
-    messageText =
-    'Hey , This is xyz find me at ${elderLocation.address} .\n Link to my location : ${elderLocation.url}';
-    return elderLocation;
   }
 
   Widget _phoneTile(String name) {
@@ -118,7 +124,12 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('SMS/MMS Example'),
+          title: const Text(
+            'Emergency',
+            style: TextStyle(color: Colors.black,fontSize: 25),
+          ),
+          // textTheme: ColorScheme.dark(),
+          backgroundColor: Color(0xFFffc0b4),
         ),
         body: ListView(
           children: <Widget>[
@@ -160,11 +171,11 @@ class _MyAppState extends State<MyApp> {
             Divider(),
             ListTile(
               leading: Icon(Icons.message),
-              //title: TextField(
-                //decoration: InputDecoration(labelText: " Add Message"),
-                //controller: _controllerMessage,
-                //onChanged: (String value) => setState(() {}),
-             // ),
+              title: TextField(
+                decoration: InputDecoration(labelText: " Add Message"),
+                controller: _controllerMessage,
+                onChanged: (String value) => setState(() {}),
+              ),
             ),
             Divider(),
             ListTile(
@@ -181,10 +192,10 @@ class _MyAppState extends State<MyApp> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: RaisedButton(
-                color: Theme.of(context).accentColor,
+                color: Color(0xFFffc0b4),
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Text("SEND",
-                    style: Theme.of(context).accentTextTheme.button),
+                    style: TextStyle(color: Colors.black)),
                 onPressed: () {
                   _send();
                 },
