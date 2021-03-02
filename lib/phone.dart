@@ -68,6 +68,7 @@ class _phone_vState extends State<phone_v> {
             usersRef.document(user.id).setData({
               "id": user.id,
               "email": user.email,
+              "username": "",
               "displayName": user.displayName,
               "number": "",
               "emergencyContact": "",
@@ -108,6 +109,7 @@ class _phone_vState extends State<phone_v> {
           usersRef.document(user.id).setData({
             "id": user.id,
             "email": user.email,
+            "username": "",
             "displayName": user.displayName,
             "number": "",
             "emergencyContact": "",
@@ -180,6 +182,7 @@ class _phone_vState extends State<phone_v> {
     ref.setData({
     "id": ref.documentID,
     "email": "",
+      "username": "",
     "displayName": "",
     "number": "$number",
      "emergencyContact": "",
@@ -243,6 +246,7 @@ class _phone_vState extends State<phone_v> {
                       ref.setData({
                         "id": ref.documentID,
                         "email": "",
+                        "username": "",
                         "displayName": "",
                         "number": "$number",
                         "emergencyContact": "",

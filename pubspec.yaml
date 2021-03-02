@@ -78,8 +78,8 @@ flutter:
     - images/heartrate.jpg
     - images/pharmacy.jpg
     - images/ps.jpg
-    - assets/chemists.mp3
-    - assets/maps.mp3
+    #- assets/chemists.mp3
+    #- assets/maps.mp3
 
   fonts:
     - family: Ubuntu

@@ -5,10 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:we_care/Exercises.dart';
 import 'package:we_care/HealthVitals.dart';
-//import 'package:we_care/chatScreen.dart';
+import 'package:we_care/chatList.dart';
 //import 'package:we_care/LoginPage.dart';
 import 'package:we_care/constants.dart';
+import 'package:we_care/createUsername.dart';
 import 'package:we_care/phone.dart';
 import 'package:we_care/screens/details_screen.dart';
 import 'package:we_care/Widgets/bottom_nav_bar.dart';
@@ -57,6 +59,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  String username;
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context)
         .size; //this gonna give us total height and with of our device
@@ -108,8 +111,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       future: usersRef.document(widget.userID).get(),
                       builder: (BuildContext context,
                           AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if(!snapshot.hasData)
+                        {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.blueAccent,
+                            ),
+                          );
+                        }
                         Map<String, dynamic> data = snapshot.data.data;
                         String name = data['displayName'];
+                        username=data['username'];
                         return Text(
                           "Good Morning $name",
                           style: Theme.of(context)
@@ -142,7 +154,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         CustomBox(
                           title: "My Buddy",
                           img: "images/volunteer1.jpg",
-                          press: () {},
+                          press: () {
+
+                          },
                         ),
                         CustomBox(
                           title: "My Pills",
@@ -206,10 +220,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           title: "My Chats",
                           img: "images/phone.png",
                           press: () {
+                            if(username==""){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return createUsername(userID: widget.userID);
+                                  }));
+                            }
+                            else{
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return chatList(userID: widget.userID);
+                                  }));
+                            }
+                          },
+                        ),
+                        CustomBox(
+                          title: "Exercises",
+                          img: "images/ps.jpg",
+                          press: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              //return chatScreen(userID: widget.userID);
-                            }));
+                                  return exercises();
+                                }));
                           },
                         ),
                       ],
