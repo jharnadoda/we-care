@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:we_care/groupChatScreen.dart';
 import 'package:we_care/personalChatScreen.dart';
+import 'package:we_care/searchChat.dart';
 
 import 'HomePage.dart';
 
@@ -203,7 +204,8 @@ class _chatListState extends State<chatList> {
                             }
                             if(userchatListData.contains(chatId))
                               {
-                                final chatListWidget= personalChatListTile(chatId: chatId, senderID: widget.userID, receiverID: receiverID ,time: time);
+                                final chatListWidget= personalChatListTile(chatId: chatId, senderID: widget.userID,
+                                    receiverID: receiverID ,time: time);
                                 chatListDataWidgets.add(chatListWidget);
                               }
                           }
@@ -225,6 +227,12 @@ class _chatListState extends State<chatList> {
                 child: Container(
                   alignment: Alignment.bottomRight,
                   child: FloatingActionButton(
+                    onPressed: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return searchChat(userID: widget.userID, );
+                          }));
+                    },
                     backgroundColor: Color(0xFFFEC0B2),
                     child: Icon(Icons.search,
                     color: Colors.black,),
