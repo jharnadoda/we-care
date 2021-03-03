@@ -15,19 +15,19 @@
       },
       "oauth_client": [
         {
+          "client_id": "104312931859-39h0ni7ocg7lmhb8talhl1qq95i4mah2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.we_care",
+            "certificate_hash": "2f321544ef622c8c1b3bb04e20e598ec834104aa"
+          }
+        },
+        {
           "client_id": "104312931859-3id7sfjrpd5tv7ves3me0r0ksqk7hp2f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.we_care",
             "certificate_hash": "1e4bd83729a4448a17156fd6553939c996c7211b"
-          }
-        },
-        {
-          "client_id": "104312931859-5lvnpvi8jrvk0v7sohhslgko2mtk0d8j.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.we_care",
-            "certificate_hash": "2f321544ef622c8c1b3bb04e20e598ec834104aa"
           }
         },
         {

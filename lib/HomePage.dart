@@ -21,6 +21,8 @@ import 'Widgets/CustomBox.dart';
 import 'models/users.dart';
 import 'trackerHome.dart';
 import 'emergency.dart';
+import 'elder_location.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 
 final usersRef = Firestore.instance.collection('users');
 
@@ -93,13 +95,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       child: RaisedButton(
                         onPressed: (){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                            return MyApp();
-                       }
-                       ),
-                       );
+                          _send();
+                       //    Navigator.push(
+                       //        context,
+                       //        MaterialPageRoute(builder: (context) {
+                       //      return MyApp();
+                       // }
+                       // ),
+                       // );
                         }
                       )
                     ),
@@ -223,4 +226,41 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  ElderLocation elderLocation;
+  String messageText = '';
+  String _message, body;
+  String _canSendSMSMessage = "Check is not run.";
+  List <String> people=["9820446950"];
+
+  @override
+  void initState() {
+    super.initState();
+    //initPlatformState();
+    elderLocation = ElderLocation();
+
+    getLocationDetails();
+  }
+  void _sendSMS(List <String> recipents) async {
+    try {
+      String _result = await sendSMS(
+          message: messageText, recipients: recipents);
+      setState(() => _message = _result);
+    } catch (error) {
+      setState(() => _message = error.toString());
+    }
+  }
+  getLocationDetails() async {//CALL THIS
+    await elderLocation.getLocationData();
+    messageText =
+    'Hey , This is xyz find me at ${elderLocation.address} .\n Link to my location : ${elderLocation.url}';
+    return elderLocation;
+  }
+  void _send() {
+    if (people == null || people.isEmpty) {
+      setState(() => _message = "At Least 1 Person or Message Required");
+    } else {
+      _sendSMS(people);
+    }
+  }
 }
+
