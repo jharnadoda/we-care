@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         CustomBox(
                           title: "Hospitals Near Me",
-                          img: "images/hospital.jpg",
+                          img: "images/hospital.JPG",
                           press: () {
                             Navigator.push(
                               context,
