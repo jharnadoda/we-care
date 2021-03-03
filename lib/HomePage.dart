@@ -93,18 +93,27 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Color(0xFFffc0b7),
                         shape: BoxShape.circle,
                       ),
-                      child: RaisedButton(
-                        onPressed: (){
-                          _send();
-                       //    Navigator.push(
-                       //        context,
-                       //        MaterialPageRoute(builder: (context) {
-                       //      return MyApp();
-                       // }
-                       // ),
-                       // );
-                        }
-                      )
+
+                       child: GestureDetector(
+                         onTap: ()
+                           {
+                             _send();
+                           },
+                         child: Image.asset('images/emergency.png'),
+
+                       ),
+                       //child: RaisedButton(
+                      //   onPressed: (){
+                      //     _send();
+                      //  //    Navigator.push(
+                      //  //        context,
+                      //  //        MaterialPageRoute(builder: (context) {
+                      //  //      return MyApp();
+                      //  // }
+                      //  // ),
+                      //  // );
+                      //   }
+                    //  )
                     ),
                   ),
                   FutureBuilder<DocumentSnapshot>(
