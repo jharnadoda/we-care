@@ -17,6 +17,7 @@ class searchChat extends StatefulWidget{
 class _searchChatState extends State<searchChat> {
   TextEditingController searchText=new TextEditingController();
   String search;
+  Color group = Colors.grey, friends =Colors.white;
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context)
         .size;
@@ -54,18 +55,48 @@ class _searchChatState extends State<searchChat> {
             }
           ),
         ),
-        body: Column(
-          children: [
-            Row(
-              children: [
-                RaisedButton(
-                  child: Text('Groups'),
-                ),
-                RaisedButton(child: Text('People'),)
-              ],
-            ),
-            (searchText.text=="")?nocontentscreen(size):searchList(searchText.text, widget.userID)
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
+                    child: Container(
+                      width: size.width* .50,
+                      color: group,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        child: Center(child: Text('Groups')),
+                      ),
+                    ),
+                    onTap: (){
+                      setState(() {
+                        group= Colors.grey;
+                        friends=Colors.white;
+                      });
+                    },
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      width: size.width* .50,
+                      color: friends,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 10, bottom: 10),
+                        child: Center(child: Text('Friends')),
+                      ),
+                    ),
+                      onTap: (){
+                        setState(() {
+                          group= Colors.white;
+                          friends=Colors.grey;
+                        });
+                      },
+                  )
+                ],
+              ),
+              (searchText.text=="")?nocontentscreen(size):searchList(searchText.text, widget.userID)
+            ],
+          ),
         )//(searchText.text=="")?nocontentscreen(size):searchList(searchText.text, widget.userID)
       )
     );
@@ -178,11 +209,11 @@ nocontentscreen(var size){
     shrinkWrap: true,
     children: [
       Container(
-        height: size.height * .35,
+        height: size.height * .30,
       ),
       Icon(Icons.search,
         size: 50,),
-      Text('Find Users',
+      Text('Find Groups or Users',
         textAlign: TextAlign.center,
         style: TextStyle(
             fontSize: 25
