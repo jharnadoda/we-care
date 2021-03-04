@@ -240,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           press: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                                  return exercises();
+                                  return exercises(userID: widget.userID);
                                 }));
                           },
                         ),
