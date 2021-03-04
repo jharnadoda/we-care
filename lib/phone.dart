@@ -1,4 +1,3 @@
-//import 'dart:html';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:we_care/addEmergencyContact.dart';
 import 'package:we_care/models/users.dart';
-import 'otp.dart';
-import 'signup_volunteer.dart';
 import 'HomePage.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -68,6 +65,7 @@ class _phone_vState extends State<phone_v> {
             usersRef.document(user.id).setData({
               "id": user.id,
               "email": user.email,
+              "username": "",
               "displayName": user.displayName,
               "number": "",
               "emergencyContact": "",
@@ -108,6 +106,7 @@ class _phone_vState extends State<phone_v> {
           usersRef.document(user.id).setData({
             "id": user.id,
             "email": user.email,
+            "username": "",
             "displayName": user.displayName,
             "number": "",
             "emergencyContact": "",
@@ -180,6 +179,7 @@ class _phone_vState extends State<phone_v> {
     ref.setData({
     "id": ref.documentID,
     "email": "",
+      "username": "",
     "displayName": "",
     "number": "$number",
      "emergencyContact": "",
@@ -243,6 +243,7 @@ class _phone_vState extends State<phone_v> {
                       ref.setData({
                         "id": ref.documentID,
                         "email": "",
+                        "username": "",
                         "displayName": "",
                         "number": "$number",
                         "emergencyContact": "",
