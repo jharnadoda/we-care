@@ -1,3 +1,5 @@
+import 'package:we_care/addBloodSugar.dart';
+import 'package:we_care/bloodSugarTrackerScreen.dart';
 import 'addBloodPressure.dart';
 import 'bloodPressureTrackerScreen.dart';
 import 'addWeight.dart';
@@ -15,13 +17,8 @@ class _TrackerHomeState extends State<TrackerHome> {
   initializeDisplayMap() {
     hideMap = Map<String, bool>();
     trackMap = Map<String, bool>();
-    hideMap = {'sleep': true, 'weight': true, 'sugar': true, 'pressure': true};
-    trackMap = {
-      'sleep': false,
-      'weight': true,
-      'sugar': true,
-      'pressure': true
-    };
+    hideMap = {'weight': true, 'sugar': true, 'pressure': true};
+    trackMap = {'weight': true, 'sugar': true, 'pressure': true};
   }
 
   onHide(String type) {
@@ -90,6 +87,23 @@ class _TrackerHomeState extends State<TrackerHome> {
             isHidden: hideMap['pressure'],
             isTracking: trackMap['pressure'],
           ),
+          TrackerCard(
+            title: 'Blood Sugar',
+            subTitle: '\nAdd your Blood Sugar reading today!\n',
+            onAdd: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return AddBloodSugarScreen();
+              }));
+            },
+            onHide: () => onHide('sugar'),
+            onView: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return BloodSugarTrackerScreen();
+              }));
+            },
+            isHidden: hideMap['sugar'],
+            isTracking: trackMap['sugar'],
+          ),
         ],
       ),
     );
@@ -133,7 +147,7 @@ class TrackerCard extends StatelessWidget {
                     children: <Widget>[
                       FaIcon(
                         FontAwesomeIcons.poll,
-                        color: Color(0xff3d5afe),
+                        color: Color(0xFFffc0b4),
                       ),
                       SizedBox(
                         width: 8,
@@ -162,7 +176,7 @@ class TrackerCard extends StatelessWidget {
                       ? RaisedButton(
                           onPressed: onView,
                           elevation: 2,
-                          textColor: Color(0xff3d5afe),
+                          textColor: Color(0xFFffc0b4),
                           child: Text(
                             'View Chart',
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -171,7 +185,7 @@ class TrackerCard extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                               side: BorderSide(
-                                color: Color(0xff3d5afe),
+                                color: Color(0xFFffc0b4),
                               )),
                           padding: EdgeInsets.symmetric(
                               horizontal: 40, vertical: 10),
@@ -179,7 +193,7 @@ class TrackerCard extends StatelessWidget {
                       : RaisedButton(
                           onPressed: onHide,
                           elevation: 2,
-                          textColor: Color(0xff3d5afe),
+                          textColor: Color(0xFFffc0b4),
                           child: Text(
                             'Hide',
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -188,7 +202,7 @@ class TrackerCard extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                               side: BorderSide(
-                                color: Color(0xff3d5afe),
+                                color: Color(0xFFffc0b4),
                               )),
                           padding: EdgeInsets.symmetric(
                               horizontal: 40, vertical: 10),
@@ -197,7 +211,7 @@ class TrackerCard extends StatelessWidget {
                     width: 25,
                   ),
                   RaisedButton(
-                      color: Color(0xff3d5afe),
+                      color: Color(0xFFffc0b4),
                       elevation: 2,
                       textColor: Colors.white,
                       padding:
