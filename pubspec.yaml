@@ -43,6 +43,9 @@ dependencies:
   flutter_android: ^0.8.0
   flutter_sms: ^2.1.1
   youtube_player_flutter: ^7.0.0+7
+  checkdigit: ^0.2.0
+  condition: ^0.0.8
+
 
 dev_dependencies:
   flutter_test:
