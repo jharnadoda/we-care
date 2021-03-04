@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:we_care/chatList.dart';
+import 'package:we_care/personalChatScreen.dart';
 
 import 'groupChatScreen.dart';
 
@@ -94,7 +95,8 @@ class _searchChatState extends State<searchChat> {
                   )
                 ],
               ),
-              (searchText.text=="")?nocontentscreen(size):searchList(searchText.text, widget.userID)
+              (searchText.text=="")?nocontentscreen(size): (group==Colors.grey)?
+              searchList(searchText.text, widget.userID): searchPersonalList(searchText.text, widget.userID)
             ],
           ),
         )//(searchText.text=="")?nocontentscreen(size):searchList(searchText.text, widget.userID)
@@ -103,6 +105,138 @@ class _searchChatState extends State<searchChat> {
     // TODO: implement build
     throw UnimplementedError();
   }
+}
+searchPersonalList(String searchText, String userID){
+  return Column(
+    children: [
+      Divider(
+        thickness: 2,
+      ),
+      FutureBuilder(
+        future: Firestore.instance.collection('users').document(userID).collection('personalChatList').getDocuments(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.blueAccent,
+                ),
+              );
+            }
+            final ListData = snapshot.data.documents.reversed;
+            List<String> userchatListData = [];
+            for (var chatList in ListData) {
+              final chat = chatList.data['id'];
+              userchatListData.add(chat);
+            }
+            return FutureBuilder(
+              future: Firestore.instance.collection('users').where(
+                  'username', isGreaterThanOrEqualTo: searchText).getDocuments(),
+                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.blueAccent,
+                      ),
+                    );
+                  }
+                  final searchData = snapshot.data.documents;
+                  List<searchFriendsTile> searchDataWidgets = [];
+                  for (var search in searchData){
+                    final username = search.data['username'];
+                    final id = search.data['id'];
+                    if(id!=userID){
+                      final searchWidget= searchFriendsTile(username: username, userID: userID,id: id, userchatListData: userchatListData);
+                      searchDataWidgets.add(searchWidget);
+                    }
+                  }
+                  return Column(
+                    children: searchDataWidgets,
+                  );
+                }
+            );
+          }
+      )
+    ],
+  );
+}
+class searchFriendsTile extends StatelessWidget{
+  @override
+  searchFriendsTile({this.username, this.userID, this.id, this.userchatListData});
+  String username, userID, id;
+  String chatId;
+  List<String> userchatListData=[];
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Firestore.instance.collection('users').document(userID).get(),
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
+        if(!snapshot.hasData)
+        {
+          return Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.blueAccent,
+            ),
+          );
+        }
+        Map<String, dynamic> data = snapshot.data.data;
+        String senderUsername = data['username'];
+        return GestureDetector(
+          onTap: (){
+            if(senderUsername.compareTo(username)>0){
+              chatId=senderUsername+username;
+            }
+            else{
+              chatId=username+senderUsername;
+            }
+            if(!userchatListData.contains(chatId)){
+              Firestore.instance.collection('users').document(userID).collection('personalChatList').add({
+                "id":chatId
+              });
+              Firestore.instance.collection('users').document(id).collection('personalChatList').add({
+                "id":chatId
+              });
+              Firestore.instance.collection('personalChats').document(chatId).setData({
+                "id": chatId,
+                "lastText": "",
+                "member1": userID,
+                "member2": id,
+                "time": "",
+                "timestamp": DateTime.now()
+              });
+            }
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return PersonalChatScreen(name: username, chatId: chatId, userID:userID);
+                }));
+          },
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(top:10, bottom: 10, left: 10),
+                  child: Text(
+                    username, style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                  ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:8.0, right: 8),
+                child: Divider(
+                  thickness: 2,
+                ),
+              )
+            ],
+          ),
+        );
+      }
+    );
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+
 }
 searchList(String searchText, String userID){
   return Column(
