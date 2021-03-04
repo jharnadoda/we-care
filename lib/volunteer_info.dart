@@ -72,7 +72,7 @@ class _volunteerState extends State<volunteer> {
     );
   }
   _launchURL() async {
-    const url = 'https://docs.google.com/forms/d/1rGYo9j_T16QMAxsn-l8YU4BKPGPdQ8y_QzYJt9vcGq8/edit?ts=6038f008';
+    const url = 'https://docs.google.com/forms/d/e/1FAIpQLSdI-tZ4Deens2v20sFxY222g7Pc3il9Jzj5BAZjZUA9pQnstw/viewform?usp=sf_link';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

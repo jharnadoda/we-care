@@ -83,7 +83,7 @@ class _BloodPressureTrackerScreenState
                         child: Container(
                           margin: EdgeInsets.fromLTRB(20, 8, 20, 0),
                           child: Text(
-                            'Diastolic ',
+                            'Lower BP Level ',
                             style: TextStyle(
                               fontSize: 32,
                               color: Color(0xFFffc0b4),
@@ -108,7 +108,7 @@ class _BloodPressureTrackerScreenState
                               child: BloodPressureChart(
                                 animate: true,
                                 userID: userId,
-                                type: 'diastolic',
+                                type: 'Lower BP Level',
                               ),
                             ),
                             margin: EdgeInsets.all(8),
@@ -118,7 +118,7 @@ class _BloodPressureTrackerScreenState
                       Card(
                         margin: EdgeInsets.only(left: 8, right: 8),
                         child: ListTile(
-                          subtitle: Text('Average Diastolic '),
+                          subtitle: Text('Average Lower BP Values '),
                           title: Text(averageDiastolic.toStringAsFixed(2)),
                         ),
                       )
@@ -137,7 +137,7 @@ class _BloodPressureTrackerScreenState
                         child: Container(
                           margin: EdgeInsets.fromLTRB(20, 8, 20, 0),
                           child: Text(
-                            'Systolic',
+                            'Upper BP Level',
                             style: TextStyle(
                               fontSize: 32,
                               color: Color(0xFFffc0b4),
@@ -162,7 +162,7 @@ class _BloodPressureTrackerScreenState
                               child: BloodPressureChart(
                                 animate: true,
                                 userID: userId,
-                                type: 'systolic',
+                                type: 'Upper BP Level',
                               ),
                             ),
                             margin: EdgeInsets.all(8),
@@ -172,7 +172,7 @@ class _BloodPressureTrackerScreenState
                       Card(
                         margin: EdgeInsets.only(left: 8, right: 8),
                         child: ListTile(
-                          subtitle: Text('Average Systolic'),
+                          subtitle: Text('Average Upper BP Values'),
                           title: Text(averageSystolic.toStringAsFixed(2)),
                         ),
                       )
