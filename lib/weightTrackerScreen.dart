@@ -3,8 +3,11 @@ import 'package:we_care/models/tracker.dart';
 import 'package:we_care/Widgets/chartWeight.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:we_care/trackerHome.dart';
 
 class WeightTrackerScreen extends StatefulWidget {
+  WeightTrackerScreen({this.userID});
+  String userID;
   @override
   _WeightTrackerScreenState createState() => _WeightTrackerScreenState();
 }
@@ -53,6 +56,25 @@ class _WeightTrackerScreenState extends State<WeightTrackerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+            color: Colors.black,),
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return TrackerHome(userID: widget.userID);
+                }));
+          },
+        ),
+        title: Text('WeCare',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Color(0xFFFEC0B2),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[

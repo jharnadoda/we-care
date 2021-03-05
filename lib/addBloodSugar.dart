@@ -4,8 +4,11 @@ import 'package:we_care/models/tracker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:we_care/trackerHome.dart';
 
 class AddBloodSugarScreen extends StatefulWidget {
+  AddBloodSugarScreen({this.userID});
+  String userID;
   @override
   _AddBloodSugarScreenState createState() => _AddBloodSugarScreenState();
 }
@@ -27,6 +30,25 @@ class _AddBloodSugarScreenState extends State<AddBloodSugarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+            color: Colors.black,),
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return TrackerHome(userID: widget.userID);
+                }));
+          },
+        ),
+        title: Text('WeCare',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Color(0xFFFEC0B2),
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -116,7 +138,7 @@ class _AddBloodSugarScreenState extends State<AddBloodSugarScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => BloodSugarTrackerScreen()));
+                          builder: (_) => BloodSugarTrackerScreen(userID: widget.userID)));
                 },
                 textColor: Colors.white,
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),

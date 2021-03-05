@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TrackerHome extends StatefulWidget {
-  @override
   TrackerHome({this.userID});
   String userID;
+  @override
   _TrackerHomeState createState() => _TrackerHomeState();
 }
 
@@ -68,13 +68,13 @@ class _TrackerHomeState extends State<TrackerHome> {
             subTitle: '\nAdd your Weight!\n',
             onAdd: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return AddWeightScreen();
+                return AddWeightScreen(userID: widget.userID);
               }));
             },
             onHide: () => onHide('weight'),
             onView: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return WeightTrackerScreen();
+                return WeightTrackerScreen(userID: widget.userID,);
               }));
             },
             isHidden: hideMap['weight'],
@@ -85,13 +85,13 @@ class _TrackerHomeState extends State<TrackerHome> {
             subTitle: '\nAdd your BP reading today!\n',
             onAdd: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return AddBloodPressureScreen();
+                return AddBloodPressureScreen(userID: widget.userID,);
               }));
             },
             onHide: () => onHide('pressure'),
             onView: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return BloodPressureTrackerScreen();
+                return BloodPressureTrackerScreen(userID: widget.userID,);
               }));
             },
             isHidden: hideMap['pressure'],
@@ -102,13 +102,13 @@ class _TrackerHomeState extends State<TrackerHome> {
             subTitle: '\nAdd your Blood Sugar reading today!\n',
             onAdd: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return AddBloodSugarScreen();
+                return AddBloodSugarScreen(userID: widget.userID);
               }));
             },
             onHide: () => onHide('sugar'),
             onView: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return BloodSugarTrackerScreen();
+                return BloodSugarTrackerScreen(userID: widget.userID);
               }));
             },
             isHidden: hideMap['sugar'],
