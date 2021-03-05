@@ -56,7 +56,7 @@ class _AddBloodSugarScreenState extends State<AddBloodSugarScreen> {
                       keyboardType: TextInputType.number,
                       controller: bloodSugar,
                       decoration: InputDecoration(
-                        hintText: 'Blood sugar in mg/dL',
+                        hintText: 'Blood Sugar Value',
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(),
                         disabledBorder: OutlineInputBorder(),

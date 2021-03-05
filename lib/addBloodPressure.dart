@@ -58,7 +58,7 @@ class _AddBloodPressureScreenState extends State<AddBloodPressureScreen> {
                       keyboardType: TextInputType.number,
                       controller: diastolic,
                       decoration: InputDecoration(
-                        hintText: 'Diastolic in mm/Hg',
+                        hintText: 'Lower BP Value',
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(),
                         disabledBorder: OutlineInputBorder(),
@@ -86,7 +86,7 @@ class _AddBloodPressureScreenState extends State<AddBloodPressureScreen> {
                       keyboardType: TextInputType.number,
                       controller: systolic,
                       decoration: InputDecoration(
-                        hintText: 'Systolic in mm/hg',
+                        hintText: 'High BP Value',
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(),
                         disabledBorder: OutlineInputBorder(),
@@ -114,7 +114,7 @@ class _AddBloodPressureScreenState extends State<AddBloodPressureScreen> {
                       keyboardType: TextInputType.number,
                       controller: pulse,
                       decoration: InputDecoration(
-                        hintText: 'Pulse in bpm',
+                        hintText: 'Pulse',
                         border: OutlineInputBorder(),
                         focusedBorder: OutlineInputBorder(),
                         disabledBorder: OutlineInputBorder(),
@@ -184,7 +184,7 @@ class _AddBloodPressureScreenState extends State<AddBloodPressureScreen> {
                 label: Text('Add Data')),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Recommended value .'),
+              //child: Text('Recommended value .'),
             )
           ],
         ),
