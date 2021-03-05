@@ -1,5 +1,6 @@
 import 'package:we_care/addBloodSugar.dart';
 import 'package:we_care/bloodSugarTrackerScreen.dart';
+import 'HomePage.dart';
 import 'addBloodPressure.dart';
 import 'bloodPressureTrackerScreen.dart';
 import 'addWeight.dart';
@@ -9,6 +10,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TrackerHome extends StatefulWidget {
   @override
+  TrackerHome({this.userID});
+  String userID;
   _TrackerHomeState createState() => _TrackerHomeState();
 }
 
@@ -36,20 +39,27 @@ class _TrackerHomeState extends State<TrackerHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+            color: Colors.black,),
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return HomePage(userID: widget.userID);
+                }));
+          },
+        ),
+        title: Text('Health Vitals Trackers',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Color(0xFFFEC0B2),
+      ),
       body: ListView(
         children: <Widget>[
-          Center(
-            child: Container(
-              margin: EdgeInsets.fromLTRB(20, 30, 20, 0),
-              child: Text(
-                'Health Vitals Trackers',
-                style: TextStyle(
-                  fontSize: 32,
-                  color: Color(0xFFffc0b4),
-                ),
-              ),
-            ),
-          ),
           SizedBox(
             height: 10,
           ),

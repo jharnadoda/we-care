@@ -33,7 +33,7 @@ class _volunteerState extends State<volunteer> {
       padding: const EdgeInsets.all(20.0),
       child: Column(children: [
         Padding(
-          padding: const EdgeInsets.only(left: 5, top: 150.0, right: 5.0, bottom: 30.0),
+          padding: const EdgeInsets.only(left: 5, top: 120.0, right: 5.0, bottom: 30.0),
           child: Text(
               'Welcome Volunteers',
             style: TextStyle(
