@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:we_care/HomePage.dart';
 import 'form_controller.dart';
 import 'form.dart';
 import 'package:condition/condition.dart';
@@ -6,20 +7,22 @@ import 'package:checkdigit/checkdigit.dart';
 
 class FeedbackListScreen extends StatelessWidget {
   @override
+  FeedbackListScreen({@required this.userID});
+  String userID;
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Responses',
         theme: ThemeData(
           primarySwatch: Colors.pink,
         ),
-        home: FeedbackListPage(title: "My Buddies"));
+        home: FeedbackListPage(title: "My Buddies", userID: userID));
   }
 }
 
 class FeedbackListPage extends StatefulWidget {
-  FeedbackListPage({Key key, this.title}) : super(key: key);
+  FeedbackListPage({Key key, this.title, this.userID}) : super(key: key);
 
-  final String title;
+  final String title, userID;
 
   @override
   _FeedbackListPageState createState() => _FeedbackListPageState();
@@ -45,6 +48,16 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+            color: Colors.white,),
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return HomePage(userID: widget.userID);
+                }));
+          },
+        ),
         title: Text(widget.title),
       ),
       body: ListView.builder(

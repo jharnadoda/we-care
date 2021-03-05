@@ -5,11 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:we_care/Exercises.dart';
 import 'package:we_care/HealthVitals.dart';
-//import 'package:we_care/chatScreen.dart';
+import 'package:we_care/chatList.dart';
 //import 'package:we_care/LoginPage.dart';
 import 'package:we_care/constants.dart';
-import 'package:we_care/feedback_list.dart';
+import 'package:we_care/createUsername.dart';
 import 'package:we_care/phone.dart';
 import 'package:we_care/screens/details_screen.dart';
 import 'package:we_care/Widgets/bottom_nav_bar.dart';
@@ -19,9 +20,11 @@ import 'NearbyHospitalScreen.dart';
 import 'NearbyPharmacyScreen.dart';
 import 'NearbyPoliceScreen.dart';
 import 'Widgets/CustomBox.dart';
+import 'feedback_list.dart';
 import 'models/users.dart';
 import 'trackerHome.dart';
-import 'package:we_care/feedback_list.dart';
+
+
 import 'elder_location.dart';
 import 'package:flutter_sms/flutter_sms.dart';
 
@@ -60,6 +63,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  String username;
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context)
         .size; //this gonna give us total height and with of our device
@@ -95,13 +99,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape: BoxShape.circle,
                       ),
 
-                      child: GestureDetector(
-                        onTap: () {
-                          _send();
-                        },
-                        child: Image.asset('images/emergency.png'),
-                      ),
-                      //child: RaisedButton(
+                       child: GestureDetector(
+                         onTap: ()
+                           {
+                             _send();
+                           },
+                         child: Image.asset('images/emergency.png'),
+
+                       ),
+                       //child: RaisedButton(
                       //   onPressed: (){
                       //     _send();
                       //  //    Navigator.push(
@@ -112,15 +118,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       //  // ),
                       //  // );
                       //   }
-                      //  )
+                    //  )
                     ),
                   ),
                   FutureBuilder<DocumentSnapshot>(
                       future: usersRef.document(widget.userID).get(),
                       builder: (BuildContext context,
                           AsyncSnapshot<DocumentSnapshot> snapshot) {
+                        if(!snapshot.hasData)
+                        {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              backgroundColor: Colors.blueAccent,
+                            ),
+                          );
+                        }
                         Map<String, dynamic> data = snapshot.data.data;
                         String name = data['displayName'];
+                        username=data['username'];
                         return Text(
                           "Good Morning $name",
                           style: Theme.of(context)
@@ -154,12 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           title: "My Buddy",
                           img: "images/volunteer1.jpg",
                           press: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return FeedbackListScreen();
-                              }),
-                            );
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return FeedbackListScreen(userID: widget.userID);
+                                }));
                           },
                         ),
                         CustomBox(
@@ -191,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return NearbyPharmacyScreen();
+                                return NearbyPharmacyScreen(userID: widget.userID);
                               }),
                             );
                           },
@@ -203,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return NearbyHospitalScreen();
+                                return NearbyHospitalScreen(userID: widget.userID,);
                               }),
                             );
                           },
@@ -215,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return NearbyPoliceScreen();
+                                return NearbyPoliceScreen(userID: widget.userID);
                               }),
                             );
                           },
@@ -224,10 +237,28 @@ class _HomeScreenState extends State<HomeScreen> {
                           title: "My Chats",
                           img: "images/phone.png",
                           press: () {
+                            if(username==""){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return createUsername(userID: widget.userID);
+                                  }));
+                            }
+                            else{
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return chatList(userID: widget.userID);
+                                  }));
+                            }
+                          },
+                        ),
+                        CustomBox(
+                          title: "Exercises",
+                          img: "images/dumbbell.PNG",
+                          press: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              //return chatScreen(userID: widget.userID);
-                            }));
+                                  return exercises(userID: widget.userID);
+                                }));
                           },
                         ),
                       ],
@@ -241,12 +272,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
   ElderLocation elderLocation;
   String messageText = '';
   String _message, body;
   String _canSendSMSMessage = "Check is not run.";
-  List<String> people = ["9820446950"];
+  List <String> people=["9820446950"];
 
   @override
   void initState() {
@@ -256,25 +286,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
     getLocationDetails();
   }
-
-  void _sendSMS(List<String> recipents) async {
+  void _sendSMS(List <String> recipents) async {
     try {
-      String _result =
-          await sendSMS(message: messageText, recipients: recipents);
+      String _result = await sendSMS(
+          message: messageText, recipients: recipents);
       setState(() => _message = _result);
     } catch (error) {
       setState(() => _message = error.toString());
     }
   }
-
-  getLocationDetails() async {
-    //CALL THIS
+  getLocationDetails() async {//CALL THIS
     await elderLocation.getLocationData();
     messageText =
-        'Hey , This is xyz find me at ${elderLocation.address} .\n Link to my location : ${elderLocation.url}';
+    'Hey , This is xyz find me at ${elderLocation.address} .\n Link to my location : ${elderLocation.url}';
     return elderLocation;
   }
-
   void _send() {
     if (people == null || people.isEmpty) {
       setState(() => _message = "At Least 1 Person or Message Required");
@@ -283,3 +309,4 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 }
+

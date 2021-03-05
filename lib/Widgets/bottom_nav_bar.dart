@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:we_care/PillReminder.dart';
 import 'package:we_care/constants.dart';
 import 'package:we_care/myProfile.dart';
-import 'package:we_care/volunteer_info.dart';
+//import 'package:we_care/volunteer_info.dart';
 
 class BottomNavBar extends StatelessWidget {
   //const BottomNavBar({
@@ -26,11 +26,11 @@ class BottomNavBar extends StatelessWidget {
               svgScr: "assets/icons/calendar.svg",
             ),
             onTap: (){
-              Navigator.push(context,
+              /*Navigator.push(context,
                   MaterialPageRoute(builder: (context){
                     return volunteer_info();
                   }
-                  ));
+                  ));*/
             },
           ),
           BottomNavItem(

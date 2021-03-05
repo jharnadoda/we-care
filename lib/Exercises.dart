@@ -174,7 +174,7 @@ class exercises extends StatelessWidget{
                 onTap: (){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) {
-                        return showWorkouts(userID: userID, name: 'Core Workouts',exerciseID: 'core');
+                        return showWorkouts(userID: userID, name: 'Core Workouts',exerciseID: 'balance');
                       }));
                 },
                 child: Container(
@@ -187,7 +187,7 @@ class exercises extends StatelessWidget{
                           colors: [Colors.white, Color(0xFFFEC0B2)]
                       )
                   ),
-                  child: Center(child: Text('Core \nWorkouts',
+                  child: Center(child: Text('Balance \nWorkouts',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
