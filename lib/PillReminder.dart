@@ -2,6 +2,7 @@ import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:we_care/AddNewPill.dart';
+import 'HomePage.dart';
 import 'displayPills.dart';
 class pill extends StatelessWidget{
   final String userID;
@@ -12,6 +13,16 @@ class pill extends StatelessWidget{
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back,
+              color: Colors.black,),
+            onPressed: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) {
+                    return HomePage(userID: userID);
+                  }));
+            },
+          ),
           title: Text('WeCare',
             style: TextStyle(
               color: Colors.black,

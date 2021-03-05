@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'PillReminder.dart';
 final pillref= Firestore.instance.collection('pills');
 class displayPills extends StatefulWidget{
   final String userID;
@@ -19,7 +21,18 @@ class _displayPillsState extends State<displayPills> {
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back,
+              color: Colors.black,),
+            onPressed: (){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) {
+                    return pill(userID: widget.userID);
+                  }));
+            },
+          ),
           title: Text('WeCare',
+
             style: TextStyle(
                 color: Colors.black
             ),

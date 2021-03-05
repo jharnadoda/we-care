@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:we_care/HomePage.dart';
 import 'package:we_care/screens/details_screen.dart';
 
+import 'PillReminder.dart';
 import 'models/users.dart';
 final pillref= Firestore.instance.collection('pills');
 class AddNewPill extends StatefulWidget {
@@ -30,6 +31,16 @@ class _AddNewPillState extends State<AddNewPill> {
         home: Scaffold(
             appBar: AppBar(
               centerTitle: true,
+              leading: IconButton(
+                icon: Icon(Icons.arrow_back,
+                  color: Colors.black,),
+                onPressed: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) {
+                        return pill(userID: widget.userID);
+                      }));
+                },
+              ),
               title: Text('WeCare',
                 style: TextStyle(
                     color: Colors.black

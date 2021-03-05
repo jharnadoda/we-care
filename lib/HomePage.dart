@@ -20,6 +20,7 @@ import 'NearbyHospitalScreen.dart';
 import 'NearbyPharmacyScreen.dart';
 import 'NearbyPoliceScreen.dart';
 import 'Widgets/CustomBox.dart';
+import 'feedback_list.dart';
 import 'models/users.dart';
 import 'trackerHome.dart';
 
@@ -168,7 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           title: "My Buddy",
                           img: "images/volunteer1.jpg",
                           press: () {
-
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return FeedbackListScreen();
+                                }));
                           },
                         ),
                         CustomBox(
