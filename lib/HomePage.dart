@@ -171,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           press: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                                  return FeedbackListScreen();
+                                  return FeedbackListScreen(userID: widget.userID);
                                 }));
                           },
                         ),
@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return NearbyPharmacyScreen();
+                                return NearbyPharmacyScreen(userID: widget.userID);
                               }),
                             );
                           },
@@ -216,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return NearbyHospitalScreen();
+                                return NearbyHospitalScreen(userID: widget.userID,);
                               }),
                             );
                           },
@@ -228,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) {
-                                return NearbyPoliceScreen();
+                                return NearbyPoliceScreen(userID: widget.userID);
                               }),
                             );
                           },
@@ -253,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         CustomBox(
                           title: "Exercises",
-                          img: "images/ps.jpg",
+                          img: "images/dumbbell.PNG",
                           press: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {

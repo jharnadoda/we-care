@@ -11,6 +11,8 @@ import 'package:we_care/HomePage.dart';
 LocationManager.Location location = LocationManager.Location();
 
 class NearbyPoliceScreen extends StatefulWidget {
+  NearbyPoliceScreen({this.userID});
+  String userID;
   static const String id = 'Nearby_Police_screen';
   @override
   State<StatefulWidget> createState() {
@@ -36,6 +38,25 @@ class NearbyPoliceScreenState extends State<NearbyPoliceScreen> {
     return Scaffold(
       //drawer: AppDrawer(),
       // appBar: ElderlyAppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+            color: Colors.black,),
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return HomePage(userID: widget.userID);
+                }));
+          },
+        ),
+        title: Text('Police Stations Near You',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Color(0xFFFEC0B2),
+      ),
       body: FutureBuilder(
         future: hospitalData.getNearbyHospital(),
         builder: (context, snapshot) {
@@ -63,16 +84,7 @@ class NearbyPoliceScreenState extends State<NearbyPoliceScreen> {
           } else {
             return Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Text(
-                    'Police Station Near You',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+                SizedBox(height: 5,),
                 IconButton(
                   icon: Icon(Icons.volume_up),
                   //tooltip: 'Increase volume by 10',

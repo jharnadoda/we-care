@@ -11,6 +11,8 @@ import 'package:we_care/HomePage.dart';
 LocationManager.Location location = LocationManager.Location();
 
 class NearbyHospitalScreen extends StatefulWidget {
+  NearbyHospitalScreen({this.userID});
+  String userID;
   static const String id = 'Nearby_Hospital_screen';
   @override
   State<StatefulWidget> createState() {
@@ -36,6 +38,25 @@ class NearbyHospitalScreenState extends State<NearbyHospitalScreen> {
     return Scaffold(
       //drawer: AppDrawer(),
       // appBar: ElderlyAppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+            color: Colors.black,),
+          onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) {
+                  return HomePage(userID: widget.userID);
+                }));
+          },
+        ),
+        title: Text('Hospitals Near You',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        backgroundColor: Color(0xFFFEC0B2),
+      ),
       body: FutureBuilder(
         future: hospitalData.getNearbyHospital(),
         builder: (context, snapshot) {
@@ -63,16 +84,7 @@ class NearbyHospitalScreenState extends State<NearbyHospitalScreen> {
           } else {
             return Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Text(
-                    'Hospitals Near You',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+                SizedBox(height: 5,),
                 IconButton(
                   icon: Icon(Icons.volume_up),
                   //tooltip: 'Increase volume by 10',
