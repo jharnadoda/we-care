@@ -100,7 +100,8 @@ class _AddBloodSugarScreenState extends State<AddBloodSugarScreen> {
                       },
                     ),
                   ),
-                  Container(
+                  //commenting out the notes part bec its useless
+                  /*Container(
                     margin: EdgeInsets.all(15),
                     child: TextFormField(
                       onChanged: (v) {
@@ -122,7 +123,7 @@ class _AddBloodSugarScreenState extends State<AddBloodSugarScreen> {
                         return null;
                       },
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),

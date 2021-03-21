@@ -35,16 +35,18 @@ class _AddBloodPressureScreenState extends State<AddBloodPressureScreen> {
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-            color: Colors.black,),
-          onPressed: (){
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) {
-                  return TrackerHome(userID: widget.userID);
-                }));
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return TrackerHome(userID: widget.userID);
+            }));
           },
         ),
-        title: Text('WeCare',
+        title: Text(
+          'WeCare',
           style: TextStyle(
             color: Colors.black,
           ),
@@ -158,7 +160,8 @@ class _AddBloodPressureScreenState extends State<AddBloodPressureScreen> {
                       },
                     ),
                   ),
-                  Container(
+                  //commenting out the notes part bec its useless
+                  /*Container(
                     margin: EdgeInsets.all(15),
                     child: TextFormField(
                       onChanged: (v) {
@@ -180,7 +183,7 @@ class _AddBloodPressureScreenState extends State<AddBloodPressureScreen> {
                         return null;
                       },
                     ),
-                  ),
+                  ), */
                 ],
               ),
             ),
@@ -196,7 +199,9 @@ class _AddBloodPressureScreenState extends State<AddBloodPressureScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => BloodPressureTrackerScreen(userID: widget.userID,)));
+                          builder: (_) => BloodPressureTrackerScreen(
+                                userID: widget.userID,
+                              )));
                 },
                 textColor: Colors.white,
                 padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),

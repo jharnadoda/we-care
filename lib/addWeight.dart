@@ -102,7 +102,7 @@ class _AddWeightScreenState extends State<AddWeightScreen> {
                       },
                     ),
                   ),
-                  Container(
+                 /* Container(
                     margin: EdgeInsets.all(15),
                     child: TextFormField(
                       onChanged: (v) {
@@ -124,7 +124,7 @@ class _AddWeightScreenState extends State<AddWeightScreen> {
                         return null;
                       },
                     ),
-                  ),
+                  ), */
                 ],
               ),
             ),
@@ -146,10 +146,10 @@ class _AddWeightScreenState extends State<AddWeightScreen> {
                     borderRadius: BorderRadius.circular(10)),
                 icon: Icon(Icons.add),
                 label: Text('Add Data')),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Recommended weight is 75kg .'),
-            )
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Text('Recommended weight is 75kg .'),
+            // )
           ],
         ),
       ),
