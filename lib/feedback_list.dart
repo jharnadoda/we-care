@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:we_care/HomePage.dart';
 import 'form_controller.dart';
 import 'form.dart';
@@ -145,6 +146,12 @@ class VolunteerTile extends StatelessWidget {
             Text(
               'Mobile Number : $mobileNo',
               style: TextStyle(fontSize: 18),
+            ),
+            RaisedButton(
+              child: Text(
+                "Call ",
+              ),
+              onPressed: () => launch("tel:$mobileNo"),
             ),
             SizedBox(height: 20),
             Text(
